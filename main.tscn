@@ -1,0 +1,39 @@
+[gd_scene load_steps=3 format=3 uid="uid://ced48kmp2b0lh"]
+
+[ext_resource type="Environment" uid="uid://gfhp6vmlkgrv" path="res://main_environment.tres" id="2_0xm2m"]
+[ext_resource type="PackedScene" uid="uid://cvlo6u723n741" path="res://frog/Frog.tscn" id="2_h2yge"]
+
+[node name="Main" type="Node3D"]
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 0.646377, 0.763018, 0, -0.763018, 0.646377, 0, 5.741, 0)
+light_bake_mode = 0
+shadow_enabled = true
+shadow_opacity = 0.75
+shadow_blur = 0.75
+directional_shadow_blend_splits = true
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = ExtResource("2_0xm2m")
+
+[node name="Camera3D" type="Camera3D" parent="."]
+transform = Transform3D(0.957702, -0.149927, 0.245619, -0.0270708, 0.802826, 0.595599, -0.286486, -0.577056, 0.764809, 2.06873, 5.04048, 7.60627)
+fov = 76.5696
+
+[node name="Frog" parent="." instance=ExtResource("2_h2yge")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.00551963, 0, -0.0155284)
+
+[node name="CSGCombiner3D" type="CSGCombiner3D" parent="."]
+operation = 2
+use_collision = true
+
+[node name="CSGCylinder3D2" type="CSGCylinder3D" parent="CSGCombiner3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.4, 0)
+radius = 8.0
+height = 3.0
+
+[node name="CSGCylinder3D" type="CSGCylinder3D" parent="CSGCombiner3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.5, 0)
+operation = 2
+radius = 7.5
+height = 3.0
