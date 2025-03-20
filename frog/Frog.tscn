@@ -1,7 +1,7 @@
 [gd_scene load_steps=10 format=3 uid="uid://cvlo6u723n741"]
 
-[ext_resource type="PackedScene" uid="uid://cg7k5ndne6ojb" path="res://characters/frog/Frog.blend" id="1_o73s6"]
-[ext_resource type="Script" uid="uid://e2lb0b3wv3b2" path="res://characters/frog/Frog.gd" id="2_toxpx"]
+[ext_resource type="PackedScene" uid="uid://cg7k5ndne6ojb" path="res://frog/Frog.blend" id="1_o73s6"]
+[ext_resource type="Script" uid="uid://e2lb0b3wv3b2" path="res://frog/Frog.gd" id="2_toxpx"]
 
 [sub_resource type="SphereShape3D" id="SphereShape3D_toxpx"]
 
@@ -80,45 +80,11 @@ script = ExtResource("2_toxpx")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0)
 shape = SubResource("SphereShape3D_toxpx")
 
-[node name="Skeleton3D" parent="Rig" index="0"]
-bones/0/rotation = Quaternion(0, -0.707107, 0, 0.707107)
-bones/1/position = Vector3(-0.32, 0.16, -3.43204e-15)
-bones/1/rotation = Quaternion(0.00185881, -0.00135656, -0.475999, 0.879443)
-bones/2/rotation = Quaternion(0.227333, -0.644841, -0.55935, 0.468643)
-bones/3/rotation = Quaternion(0.330708, 0.0911983, 0.905962, -0.248087)
-bones/4/rotation = Quaternion(0.771286, 0.178987, -0.55509, -0.254866)
-bones/5/rotation = Quaternion(-0.149548, -0.117386, 0.049019, 0.980537)
-bones/6/rotation = Quaternion(-0.459228, 0.197767, 0.776904, -0.382646)
-bones/7/rotation = Quaternion(-0.0844818, -0.694097, 0.671192, 0.246158)
-bones/8/rotation = Quaternion(0.333043, 0.103776, -0.227185, 0.90923)
-bones/9/rotation = Quaternion(4.19351e-05, -7.59327e-06, 0.00146399, 0.999999)
-bones/10/rotation = Quaternion(-0.560998, -0.466658, 0.227866, 0.644662)
-bones/11/rotation = Quaternion(-0.329746, 0.0937832, 0.905912, 0.248587)
-bones/12/rotation = Quaternion(0.771228, -0.178375, 0.555303, -0.255008)
-bones/13/rotation = Quaternion(-0.149735, 0.117366, -0.0493551, 0.980494)
-bones/14/rotation = Quaternion(0.776355, 0.380119, -0.461591, -0.199287)
-bones/15/rotation = Quaternion(0.0843237, -0.694888, 0.669692, -0.248059)
-bones/16/rotation = Quaternion(0.333202, -0.104213, 0.228055, 0.908904)
-bones/17/position = Vector3(-0.00348118, 0.57584, 0.315518)
-bones/18/position = Vector3(-0.24, 0.0133435, -0.164683)
-bones/18/rotation = Quaternion(0.694472, -0.198098, -0.208599, 0.659509)
-bones/19/position = Vector3(-0.29, 0.0180086, 0.369342)
-bones/19/rotation = Quaternion(2.15862e-17, 0.797608, 0.603176, 2.15862e-17)
-bones/20/position = Vector3(0.24, 0.0133435, -0.164683)
-bones/20/rotation = Quaternion(0.694472, 0.198098, 0.208599, 0.659509)
-bones/21/position = Vector3(0.29, 0.0180086, 0.369342)
-bones/21/rotation = Quaternion(2.15862e-17, 0.797608, 0.603176, 2.15862e-17)
-
-[node name="AnimationPlayer" parent="." index="2"]
-root_motion_track = NodePath("Rig/Skeleton3D:root")
-root_motion_local = false
-speed_scale = 1.5
-
-[node name="RootMotionView" type="RootMotionView" parent="." index="3"]
+[node name="RootMotionView" type="RootMotionView" parent="." index="2"]
 animation_path = NodePath("../AnimationPlayer")
 zero_y = false
 
-[node name="AnimationTree" type="AnimationTree" parent="." index="4"]
+[node name="AnimationTree" type="AnimationTree" parent="." index="3"]
 root_motion_track = NodePath("Rig/Skeleton3D:root")
 root_motion_local = false
 tree_root = SubResource("AnimationNodeBlendTree_4f7bo")
@@ -128,7 +94,7 @@ parameters/Transition/current_state = "Idle"
 parameters/Transition/transition_request = ""
 parameters/Transition/current_index = 0
 
-[node name="RayCast3D" type="RayCast3D" parent="." index="5"]
+[node name="RayCast3D" type="RayCast3D" parent="." index="4"]
 transform = Transform3D(1, 0, 0, 0, -0.258819, 0.965926, 0, -0.965926, -0.258819, 0, 0.5, 0)
 target_position = Vector3(0, -3, 0)
 collision_mask = 15
