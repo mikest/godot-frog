@@ -17,11 +17,12 @@ directional_shadow_blend_splits = true
 environment = ExtResource("2_0xm2m")
 
 [node name="Camera3D" type="Camera3D" parent="."]
-transform = Transform3D(0.957702, -0.149927, 0.245619, -0.0270708, 0.802826, 0.595599, -0.286486, -0.577056, 0.764809, 2.06873, 5.04048, 7.60627)
+transform = Transform3D(0.978928, -0.0993499, 0.17841, -0.0270708, 0.802826, 0.595599, -0.202405, -0.587878, 0.783219, 2.06873, 5.04048, 10.2647)
 fov = 76.5696
 
 [node name="Frog" parent="." instance=ExtResource("2_h2yge")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.00551963, 0, -0.0155284)
+collision_mask = 1
 
 [node name="CSGCombiner3D" type="CSGCombiner3D" parent="."]
 operation = 2
@@ -29,11 +30,11 @@ use_collision = true
 
 [node name="CSGCylinder3D2" type="CSGCylinder3D" parent="CSGCombiner3D"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.4, 0)
-radius = 8.0
+radius = 10.0
 height = 3.0
 
 [node name="CSGCylinder3D" type="CSGCylinder3D" parent="CSGCombiner3D"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.5, 0)
 operation = 2
-radius = 7.5
+radius = 9.75
 height = 3.0

@@ -18,14 +18,17 @@
 # If you prefer, you may choose to use the CC0 License instead.
 # https://wiki.creativecommons.org/wiki/CC0
 
-class_name Frog extends CharacterBody3D
+extends CharacterBody3D
 
 @onready var player: AnimationPlayer = $AnimationPlayer
 @onready var animation_tree: AnimationTree = $AnimationTree
+@onready var obstruction_ray: RayCast3D = $RayCast3D
 
 # accessor for readability
-var playback: AnimationNodeStateMachinePlayback:
-	get: return animation_tree["parameters/playback"]
+var playback: StringName:
+	set(val):
+		print("travel:", val)
+		animation_tree["parameters/Transition/transition_request"] = val
 
 const Hop := &"Hop"
 const Idle := &"Idle"
@@ -33,37 +36,51 @@ const TurnRight := &"TurnRight"
 const TurnLeft := &"TurnLeft"
 
 # for tracking what loop we're in
-var current_anim : StringName = &""
+var current_anim: StringName = &""
+var obstructed: bool = false
 
 func _ready() -> void:
-	playback.travel(Hop)
+	playback = Hop
 
 func _physics_process(delta: float) -> void:
 	quaternion = quaternion * animation_tree.get_root_motion_rotation()
 	velocity = quaternion * animation_tree.get_root_motion_position() / delta
 	
+	obstructed = obstruction_ray.is_colliding()
+	
 	# use gravity when idling so we come to rest on the ground.
 	# if our frog jumps off a ledge, he won't fall without this.
 	if current_anim != Hop:
 		velocity.y += -ProjectSettings.get_setting("physics/3d/default_gravity")
+	
 	move_and_slide()
 
+func _random_turn():
+	var options: Array[StringName] = [
+		TurnLeft,
+		TurnLeft,
+		TurnRight,
+		Hop,
+		Idle]
+	playback = options[randi() % options.size()]
 
 # simple random jump direction loop
 func _on_animation_tree_animation_finished(anim_name: StringName) -> void:
-	if anim_name == Hop:
-		if randi_range(0,1):
-			playback.travel(TurnRight)
-		else:
-			playback.travel(TurnLeft)
+	print("fin: ", anim_name)
+	if obstructed:
+		playback = TurnRight
+		
+	elif anim_name == Hop:
+		_random_turn()
 
 	elif anim_name == TurnRight or anim_name == TurnLeft:
-		playback.travel(Hop)
+		playback = Hop
 
-	elif anim_name == Idle:
-		playback.travel(Hop)
+	else: # Idle, Hop
+		playback = Hop
 
 
 # remember what animation state we're playing
 func _on_animation_tree_animation_started(anim_name: StringName) -> void:
 	current_anim = anim_name
+	print("play: ", anim_name)
