@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=3 uid="uid://cvlo6u723n741"]
+[gd_scene load_steps=11 format=3 uid="uid://cvlo6u723n741"]
 
 [ext_resource type="PackedScene" uid="uid://cg7k5ndne6ojb" path="res://frog/Frog.blend" id="1_o73s6"]
 [ext_resource type="Script" uid="uid://e2lb0b3wv3b2" path="res://frog/Frog.gd" id="2_toxpx"]
@@ -72,13 +72,47 @@ nodes/Transition/position = Vector2(920, 160)
 nodes/output/position = Vector2(1226.67, 213.333)
 node_connections = [&"Transition", 0, &"Animation", &"Transition", 1, &"Animation 2", &"Transition", 2, &"Animation 3", &"Transition", 3, &"Animation 4", &"output", 0, &"Transition"]
 
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_fd2sm"]
+height = 1.5
+radius = 2.0
+
 [node name="Frog" instance=ExtResource("1_o73s6")]
+collision_layer = 4
 collision_mask = 15
 script = ExtResource("2_toxpx")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="." index="0"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0)
 shape = SubResource("SphereShape3D_toxpx")
+
+[node name="Skeleton3D" parent="Rig" index="0"]
+bones/0/rotation = Quaternion(0, -0.707107, 0, 0.707107)
+bones/1/position = Vector3(-0.32, 0.16, -3.43204e-15)
+bones/1/rotation = Quaternion(0.0018575, -0.0013554, -0.482538, 0.875872)
+bones/2/rotation = Quaternion(0.227491, -0.644971, -0.557666, 0.470392)
+bones/3/rotation = Quaternion(0.331803, 0.0881205, 0.905868, -0.248083)
+bones/4/rotation = Quaternion(0.771587, 0.179485, -0.554941, -0.253928)
+bones/5/rotation = Quaternion(-0.151158, -0.117119, 0.049804, 0.980283)
+bones/6/rotation = Quaternion(-0.464282, 0.201465, 0.774616, -0.379242)
+bones/7/rotation = Quaternion(-0.0811894, -0.683796, 0.683405, 0.242467)
+bones/8/rotation = Quaternion(0.331422, 0.10386, -0.226788, 0.909912)
+bones/9/rotation = Quaternion(4.16498e-05, -7.53848e-06, 0.00132064, 0.999999)
+bones/10/rotation = Quaternion(-0.559327, -0.468405, 0.22803, 0.644788)
+bones/11/rotation = Quaternion(-0.330841, 0.0907065, 0.905821, 0.248606)
+bones/12/rotation = Quaternion(0.771529, -0.178874, 0.555155, -0.254065)
+bones/13/rotation = Quaternion(-0.151355, 0.117098, -0.0501443, 0.980237)
+bones/14/rotation = Quaternion(0.774051, 0.376628, -0.466679, -0.202995)
+bones/15/rotation = Quaternion(0.0810158, -0.684606, 0.681933, -0.244372)
+bones/16/rotation = Quaternion(0.331605, -0.10428, 0.227679, 0.909575)
+bones/17/position = Vector3(-0.00348118, 0.566183, 0.321547)
+bones/18/position = Vector3(-0.24, 0.0133435, -0.164683)
+bones/18/rotation = Quaternion(0.694472, -0.198098, -0.208599, 0.659509)
+bones/19/position = Vector3(-0.29, 0.0180086, 0.369342)
+bones/19/rotation = Quaternion(2.15862e-17, 0.797608, 0.603176, 2.15862e-17)
+bones/20/position = Vector3(0.24, 0.0133435, -0.164683)
+bones/20/rotation = Quaternion(0.694472, 0.198098, 0.208599, 0.659509)
+bones/21/position = Vector3(0.29, 0.0180086, 0.369342)
+bones/21/rotation = Quaternion(-2.15862e-17, 0.797608, 0.603176, -2.15862e-17)
 
 [node name="RootMotionView" type="RootMotionView" parent="." index="2"]
 animation_path = NodePath("../AnimationPlayer")
@@ -94,10 +128,24 @@ parameters/Transition/current_state = "Idle"
 parameters/Transition/transition_request = ""
 parameters/Transition/current_index = 0
 
-[node name="RayCast3D" type="RayCast3D" parent="." index="4"]
+[node name="RayCast3D" type="RayCast3D" parent="." index="5"]
 transform = Transform3D(1, 0, 0, 0, -0.258819, 0.965926, 0, -0.965926, -0.258819, 0, 0.5, 0)
 target_position = Vector3(0, -3, 0)
 collision_mask = 15
 
+[node name="Area3D" type="Area3D" parent="." index="6"]
+collision_layer = 4
+collision_mask = 6
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Area3D" index="0"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.75, 0)
+shape = SubResource("CylinderShape3D_fd2sm")
+
+[node name="Timer" type="Timer" parent="." index="7"]
+wait_time = 6.0
+autostart = true
+
 [connection signal="animation_finished" from="AnimationTree" to="." method="_on_animation_tree_animation_finished"]
 [connection signal="animation_started" from="AnimationTree" to="." method="_on_animation_tree_animation_started"]
+[connection signal="area_entered" from="Area3D" to="." method="_on_area_3d_area_entered"]
+[connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]

@@ -24,6 +24,14 @@ fov = 76.5696
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.00551963, 0, -0.0155284)
 collision_mask = 1
 
+[node name="Frog3" parent="." instance=ExtResource("2_h2yge")]
+transform = Transform3D(-0.620559, 0, 0.784159, 0, 1, 0, -0.784159, 0, -0.620559, 0.74123, 0, 5.26493)
+collision_mask = 1
+
+[node name="Frog2" parent="." instance=ExtResource("2_h2yge")]
+transform = Transform3D(0.572933, 0, 0.819602, 0, 1, 0, -0.819602, 0, 0.572933, -5.03003, 0, -2.39213)
+collision_mask = 1
+
 [node name="CSGCombiner3D" type="CSGCombiner3D" parent="."]
 operation = 2
 use_collision = true

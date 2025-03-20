@@ -23,6 +23,7 @@ extends CharacterBody3D
 @onready var player: AnimationPlayer = $AnimationPlayer
 @onready var animation_tree: AnimationTree = $AnimationTree
 @onready var obstruction_ray: RayCast3D = $RayCast3D
+@onready var timer: Timer = $Timer
 
 # accessor for readability
 var playback: StringName:
@@ -37,6 +38,7 @@ const TurnLeft := &"TurnLeft"
 # for tracking what loop we're in
 var current_anim: StringName = &""
 var obstructed: bool = false
+var startled: bool = false
 
 func _ready() -> void:
 	playback = Hop
@@ -65,7 +67,10 @@ func _random_turn():
 
 # simple random jump direction loop
 func _on_animation_tree_animation_finished(anim_name: StringName) -> void:
-	if obstructed:
+	if !startled:
+		playback = Idle
+
+	elif obstructed:
 		playback = TurnRight
 		
 	elif anim_name == Hop:
@@ -84,7 +89,22 @@ func _on_animation_tree_animation_finished(anim_name: StringName) -> void:
 	else: # Idle, Hop
 		playback = Hop
 
+func on_startled() -> void:
+	startled = true
+	timer.start(randf_range(2, 4))
 
 # remember what animation state we're playing
 func _on_animation_tree_animation_started(anim_name: StringName) -> void:
 	current_anim = anim_name
+
+
+func _on_area_3d_area_entered(_area: Area3D) -> void:
+	on_startled()
+
+
+func _on_timer_timeout() -> void:
+	startled = !startled
+	if startled:
+		timer.wait_time = randf_range(2, 4)
+	else:
+		timer.wait_time = randf_range(6, 12)
