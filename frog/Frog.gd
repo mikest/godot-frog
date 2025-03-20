@@ -27,7 +27,6 @@ extends CharacterBody3D
 # accessor for readability
 var playback: StringName:
 	set(val):
-		print("travel:", val)
 		animation_tree["parameters/Transition/transition_request"] = val
 
 const Hop := &"Hop"
@@ -66,12 +65,18 @@ func _random_turn():
 
 # simple random jump direction loop
 func _on_animation_tree_animation_finished(anim_name: StringName) -> void:
-	print("fin: ", anim_name)
 	if obstructed:
 		playback = TurnRight
 		
 	elif anim_name == Hop:
+		# relevel the frog to the landing to prevent getting overturned over time
+		rotation.x = 0
+		rotation.z = 0
 		_random_turn()
+		
+		# despawn if we land below some arbitrary falling distance
+		if global_position.y < -100:
+			queue_free()
 
 	elif anim_name == TurnRight or anim_name == TurnLeft:
 		playback = Hop
@@ -83,4 +88,3 @@ func _on_animation_tree_animation_finished(anim_name: StringName) -> void:
 # remember what animation state we're playing
 func _on_animation_tree_animation_started(anim_name: StringName) -> void:
 	current_anim = anim_name
-	print("play: ", anim_name)

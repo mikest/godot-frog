@@ -1,7 +1,7 @@
 [gd_scene load_steps=10 format=3 uid="uid://cvlo6u723n741"]
 
-[ext_resource type="PackedScene" uid="uid://cg7k5ndne6ojb" path="res://frog/Frog.blend" id="1_o73s6"]
-[ext_resource type="Script" uid="uid://e2lb0b3wv3b2" path="res://frog/Frog.gd" id="2_toxpx"]
+[ext_resource type="PackedScene" uid="uid://cg7k5ndne6ojb" path="res://characters/frog/Frog.blend" id="1_o73s6"]
+[ext_resource type="Script" uid="uid://e2lb0b3wv3b2" path="res://characters/frog/Frog.gd" id="2_toxpx"]
 
 [sub_resource type="SphereShape3D" id="SphereShape3D_toxpx"]
 
@@ -129,7 +129,7 @@ parameters/Transition/transition_request = ""
 parameters/Transition/current_index = 0
 
 [node name="RayCast3D" type="RayCast3D" parent="." index="5"]
-transform = Transform3D(1, 0, 0, 0, 2.98023e-08, 1, 0, -1, 2.98023e-08, 0, 0.5, 0)
+transform = Transform3D(1, 0, 0, 0, -0.258819, 0.965926, 0, -0.965926, -0.258819, 0, 0.5, 0)
 target_position = Vector3(0, -3, 0)
 collision_mask = 15
 
